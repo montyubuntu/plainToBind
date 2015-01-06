@@ -14,7 +14,7 @@ MYPATH=$(cd ${0%/*} && pwd)
 if [ -r $MYPATH/tool_plaintobind.conf ]; then
     source $MYPATH/tool_plaintobind.conf
 else
-    echo tool_plaintobind.conf not found, exiting..
+    echo "tool_plaintobind.conf not found, exiting.."
     exit 1
 fi
 
