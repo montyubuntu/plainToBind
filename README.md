@@ -42,7 +42,7 @@ Performs ip / fqdn lookups from input file and writes formatted lines to stdout 
 
  
 
-  -f                specify input file instead of /home/userdir/Downloads/{latestfile}.* (always use this flag as the last argument)
+  -f                specify input file instead of /somedir/{latestfile}.* (always use this flag as the last argument)
  
 
 
