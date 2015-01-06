@@ -12,7 +12,7 @@ It does not support CNAME, TXT and SRV records. (yet)
 
 **Make sure to use a field separator like {whitespace}.
 
-Tip: set a $PATH variable ":/home/username/usr/bin" in your .bashrc and create a s.link here to"/path_to_plainToBind.sh".
+Tip: set a $PATH variable ":/home/username/usr/bin" in your .bashrc and create a s.link here to"/path_to_/plainToBind.sh".
 
 Or create an alias in you .bashrc: alias plainToBind='/path_to_/plainToBind.sh'
 
