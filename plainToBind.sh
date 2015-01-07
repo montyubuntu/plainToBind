@@ -244,7 +244,7 @@ if [ -z $DNSSERVER ]; then
     exit 1
 fi
 
-dns_alive="$(dig +short @$DNSSERVER | grep -Eiv 'not found' | wc -l)"
+dns_alive="$(dig +short @$DNSSERVER | grep -Eiv "not found|no servers could be reached|connection timed out" | wc -l)"
 if [ $dns_alive -eq 0 ]; then
     echo "Error: Failed to connect to $DNSSERVER, exiting..."
     exit 1
