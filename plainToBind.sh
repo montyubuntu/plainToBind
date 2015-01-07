@@ -12,6 +12,7 @@ fi
 
 MYPATH=$(cd ${0%/*} && pwd)
 if [ -r $MYPATH/tool_plaintobind.conf ]; then
+    if [ $VERBOSE -eq 1 ]; then echo "Getting configuration data from: $MYPATH/tool_plaintobind.conf"; fi
     source $MYPATH/tool_plaintobind.conf
 else
     echo "tool_plaintobind.conf not found, exiting.."
@@ -37,10 +38,14 @@ Performs ip / fqdn lookups from input file and writes formatted lines to stdout 
   -V                prints version info and exits."
 }
 
-validate_platform () {
+print_verbose () {
     if [ $VERBOSE == 1 ]; then
-        echo -e "Validating OS and necessary binaries...\n" 
+        echo -e "$1\n"
     fi
+}
+
+validate_platform () {
+    print_verbose "Validating OS and necessary binaries..."
     
     if [[ ! `uname` == 'Linux' ]]; then
         echo "Error: OS `uname` not supported, exiting."
@@ -62,10 +67,8 @@ validate_platform () {
             exit 1
         fi
     fi
-    
-    if [ $VERBOSE == 1 ]; then
-        echo -e "Validated!\n" 
-    fi
+
+    print_verbose "OS and dependencies validated."
 }
 
 get_inputfile () {
@@ -91,9 +94,7 @@ get_inputfile () {
 }
 
 validate_inputfile () {
-    if [ $VERBOSE == 1 ]; then
-        echo -e "Validating source file: "$DNSFILE". Checking for non-ascii stuff and file permission settings.\n"
-    fi
+    print_verbose "Validating source file: "$DNSFILE". Checking for non-ascii stuff and file permission settings."
     
     if [ -x $DNSFILE ]; then
         echo "Error: Cannot stat inputfile "$DNSFILE" or not readable, exiting..."
@@ -110,15 +111,11 @@ validate_inputfile () {
         exit 1
     fi
     
-    if [ $VERBOSE == 1 ]; then
-        echo -e "Source file validation ok!\n"
-    fi
+    print_verbose "Source file validation ok!"
 }
 
 validate_dns () {
-    if [ $VERBOSE == 1 ]; then
-        echo -e "Checking "$DNSSERVER" for existing DNS records...\n"
-    fi
+    print_verbose "Checking "$DNSSERVER" for existing DNS records..."
     
     read_index="$(cat -s "$VERIFY_INDEX" | grep -v '^$')"
     touch "$VALIDATED_INDEX"; touch "$UNVALIDATED_INDEX"
@@ -136,15 +133,11 @@ validate_dns () {
         fi
     done
     
-    if [ $VERBOSE == 1 ]; then
-        echo "DNS checking finished."
-    fi
+    print_verbose "DNS checking finished."
 }
 
 plaintext_parser () {
-    if [ $VERBOSE == 1 ]; then
-        echo -e "Reading $DNSFILE and reformatting lines with ip4 / ip6 and fqdn records. All lines should contain an ip address and fqdn record only.\n"
-    fi
+    print_verbose "Reading $DNSFILE and reformatting lines with ip4 / ip6 and fqdn records. All lines should contain an ip address and fqdn record only."
     
     IFS=$'\n'
     for line in `cat -s "$DNSFILE" | grep -v '^$'`; do
@@ -179,6 +172,8 @@ plaintext_parser () {
         fi
     done
     unset IFS
+
+    print_verbose "Parsing of ip adresses and hostnames done."
 }
 
 print_output () {
@@ -204,9 +199,7 @@ print_output () {
         rm -f "$OUTFILE"
     fi
     
-    if [ $VERBOSE == 1 ]; then
-        echo "All done, cleaning up self, deleting: "$VALIDATED_INDEX" "$UNVALIDATED_INDEX" "$VERIFY_INDEX""
-    fi
+    print_verbose "All done, cleaning up self, deleting: "$VALIDATED_INDEX" "$UNVALIDATED_INDEX" "$VERIFY_INDEX""
     
     rm -f "$VALIDATED_INDEX" "$UNVALIDATED_INDEX" "$VERIFY_INDEX"
 }
@@ -244,9 +237,7 @@ else
     validate_platform
 fi
 
-if [ $VERBOSE == 1 ]; then
-    echo -e "Verbose_mode='$VERBOSE', Input_file='$DNSFILE', Sort_output='$SORTED_OUTPUT', Write_to_outfile='$DNSREPORT', Dns_server='$DNSSERVER' No_ipv6_mode='$NO_IPV6'\n"
-fi
+print_verbose "Verbose_mode='$VERBOSE', Input_file='$DNSFILE', Sort_output='$SORTED_OUTPUT', Write_to_outfile='$DNSREPORT', Dns_server='$DNSSERVER' No_ipv6_mode='$NO_IPV6'"
 
 if [ -z $DNSSERVER ]; then
     echo "Error :No DNS Server set in $MYPATH/tool_plain_to_bind.conf, exiting..."
