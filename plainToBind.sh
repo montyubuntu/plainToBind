@@ -12,7 +12,6 @@ fi
 
 MYPATH=$(cd ${0%/*} && pwd)
 if [ -r $MYPATH/tool_plaintobind.conf ]; then
-    if [ $VERBOSE -eq 1 ]; then echo "Getting configuration data from: $MYPATH/tool_plaintobind.conf"; fi
     source $MYPATH/tool_plaintobind.conf
 else
     echo "tool_plaintobind.conf not found, exiting.."
