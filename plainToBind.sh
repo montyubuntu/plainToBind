@@ -159,8 +159,8 @@ plaintext_parser () {
     done
      
     for line in `cat -s "$DNSFILE" | grep -v '^$'`; do
-        ip4split="$(echo $line | grep -Eo "$IPV4_REGEX")" | tr -d "[:blank:]"; echo $ip4split >> "$VERIFY_INDEX"
-        ip6split="$(echo $line | grep -Eo "$IPV6_REGEX")" | tr -d "[:blank:]"; echo $ip6split >> "$VERIFY_INDEX"
+        ip4split="$(echo $line | grep -Eo "$IPV4_REGEX" | tr -d "[:blank:]")"; echo $ip4split >> "$VERIFY_INDEX"
+        ip6split="$(echo $line | grep -Eo "$IPV6_REGEX" | tr -d "[:blank:]")"; echo $ip6split >> "$VERIFY_INDEX"
         fqdnsplit="$(echo ${line,,} | grep -Eo "[[:space:]].{1,63}\.[a-zA-Z0-9-]{1,63}\.[a-zA-Z]{2,63}\.?$|^.{1,63}\.[a-zA-Z0-9-]{1,63}\.[a-zA-Z]{2,63}\.?[[:space:]]"| tr -d "[:blank:]")"; echo $fqdnsplit >> "$VERIFY_INDEX"
         if [[ -n $ip4split ]]; then
             echo -e "${fqdnsplit%%.*}\tA\t$ip4split"|sed -e 's/^[ \t]*//' -e 's/ *$//' >> "$OUTFILE"; 
