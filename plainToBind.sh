@@ -71,7 +71,7 @@ validate_platform () {
 }
 
 get_inputfile () {
-    if [ -x $DNSFILE ]; then
+    if [ -z $DNSFILE ]; then
         unset DNSFILE
         DNSFILE=`find $BASEDIR -maxdepth 1 -xdev -not -path '*/\.*' -type f -name '*\.*' -exec ls -1rt {} \+ | tail -1`
         notify_msg="$(echo "No input file given, assuming input file is:")"
@@ -95,7 +95,7 @@ get_inputfile () {
 validate_inputfile () {
     print_verbose "Validating source file: "$DNSFILE". Checking for non-ascii stuff and file permission settings."
     
-    if [ -x $DNSFILE ]; then
+    if [ ! -r $DNSFILE ]; then
         echo "Error: Cannot stat inputfile "$DNSFILE" or not readable, exiting..."
         exit 1
     fi
