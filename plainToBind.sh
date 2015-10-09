@@ -11,10 +11,10 @@ else
 fi
 
 MYPATH=$(cd ${0%/*} && pwd)
-if [ -r $MYPATH/tool_plaintobind.conf ]; then
-    source $MYPATH/tool_plaintobind.conf
+if [ -r $MYPATH/plaintobind.conf ]; then
+    source $MYPATH/plaintobind.conf
 else
-    echo "tool_plaintobind.conf not found, exiting.."
+    echo "plaintobind.conf not found, exiting.."
     exit 1
 fi
 
@@ -52,7 +52,7 @@ validate_platform () {
     fi
     
     if [[ -z `bash --version | grep "version 4"` ]]; then
-        echo "Warning: Your bash version may be invalid, version 4.x is required."
+        echo "Warning: Your bash version may be invalid, version 4.x or higher is required."
     fi
 
     if [ ! -x `which dig` ]; then
@@ -239,7 +239,7 @@ fi
 print_verbose "Verbose_mode='$VERBOSE', Input_file='$DNSFILE', Sort_output='$SORTED_OUTPUT', Write_to_outfile='$DNSREPORT', Dns_server='$DNSSERVER' No_ipv6_mode='$NO_IPV6'"
 
 if [ -z $DNSSERVER ]; then
-    echo "Error :No DNS Server set in $MYPATH/tool_plain_to_bind.conf, exiting..."
+    echo "Error :No DNS Server set in $MYPATH/plain_to_bind.conf, exiting..."
     exit 1
 fi
 
