@@ -239,7 +239,7 @@ fi
 print_verbose "Verbose_mode='$VERBOSE', Input_file='$DNSFILE', Sort_output='$SORTED_OUTPUT', Write_to_outfile='$DNSREPORT', Dns_server='$DNSSERVER' No_ipv6_mode='$NO_IPV6'"
 
 if [ -z $DNSSERVER ]; then
-    echo "Error :No DNS Server set in $MYPATH/plain_to_bind.conf, exiting..."
+    echo "Error :No DNS Server set in $MYPATH/plaintobind.conf, exiting..."
     exit 1
 fi
 
