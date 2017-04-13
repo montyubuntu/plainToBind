@@ -53,7 +53,7 @@ Performs ip / fqdn lookups from input file and writes formatted lines to stdout 
   -V                prints version info and exits.
 
  
-The tool automatically assumes the rfs file resides in /somedir/ and asks for user confirmation:
+The tool automatically assumes the file resides in /somedir/ and asks for user confirmation:
 
 $./plainToBind.sh   
 No input file given, assuming input file is: /somedir/dnsfile.txt
